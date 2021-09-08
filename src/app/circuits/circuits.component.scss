@@ -1,10 +1,13 @@
 .container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    
+    width: 80%;
+    margin: 0 auto;
+   
 }
 
+.carousel-container{
+    width: 60%;
+}
 
 .product-item {
     .product-item-content {

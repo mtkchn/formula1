@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { CircuitsService } from '../circuits.service';
+interface City {
+  name: string,
+  code: string
+}
 
 @Component({
   selector: 'app-circuits',
@@ -12,8 +16,33 @@ export class CircuitsComponent implements OnInit {
   public circuits:any;
   public imgs:any;
   public products: string[] = [];
+
+  
+
+  cities: City[];
+
+  selectedCity1!: City;
+
+  selectedCity2!: City;
+
+  selectedCity3!: string;
+
+  selectedCountry!: string;
+
+  countries!: any[];
+
+
+  
   responsiveOptions: any;
   constructor(private circuitsService: CircuitsService) {
+    this.cities = [
+      {name: 'New York', code: 'NY'},
+      {name: 'Rome', code: 'RM'},
+      {name: 'London', code: 'LDN'},
+      {name: 'Istanbul', code: 'IST'},
+      {name: 'Paris', code: 'PRS'}
+  ];
+
     this.responsiveOptions = [
       {
           breakpoint: '1024px',
@@ -50,3 +79,5 @@ export class CircuitsComponent implements OnInit {
     })
   }
 }
+
+
