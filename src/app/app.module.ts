@@ -10,7 +10,10 @@ import { CustomHttpInterceptorService } from './HttpInterceptor';
 import { CarouselModule } from 'primeng/carousel';
 import {DropdownModule} from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
-
+import {TableModule} from 'primeng/table';
+import {DataViewModule} from 'primeng/dataview';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {CardModule} from 'primeng/card';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,9 +26,13 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
     ButtonModule,
     CarouselModule,
     DropdownModule,
+    TableModule,
+    DataViewModule,
+    CardModule
     
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptorService, multi: true}],

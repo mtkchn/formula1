@@ -3,7 +3,8 @@
 
 
 
-    <p-carousel class="carousel-container" [value]="circuits" [showIndicators]="true"  [numVisible]="1" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptions">
+    <p-carousel class="carousel-container" (onPage)="carouselEvent($event)" [value]="circuits" [showIndicators]="true"
+        [numVisible]="1" [numScroll]="1" [circular]="true">
         <ng-template pTemplate="header">
             <h5>Basic</h5>
         </ng-template>
@@ -16,7 +17,7 @@
                     </div>
                     <div>
                         <div class="car-buttons p-mt-5">
-                           
+
                         </div>
                     </div>
                 </div>
@@ -25,10 +26,73 @@
     </p-carousel>
 
     <div>
-     
-<!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity.code" optionLabel="name" optionValue="code"></p-dropdown> -->
-<h5>Single</h5>
-<p-dropdown [options]="cities" [(ngModel)]="selectedCity1" placeholder="Select a City" optionLabel="name"
-	[showClear]="true"></p-dropdown>
+
+        <!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity.code" optionLabel="name" optionValue="code"></p-dropdown> -->
+        <h5>Select year</h5>
+        <p-dropdown (onChange)="fatchRaces($event)" [options]="seasons" [(ngModel)]="selectedCity1"
+            placeholder="Select Season" [showClear]="true"></p-dropdown>
     </div>
+
+    <div>
+        <h5>Single</h5>
+
+        <div class="flex flex-row">
+            <p-card class="w-6 m-2">
+
+
+                <p-table [value]="races" styleClass="p-datatable-sm" [paginator]="true" [rows]="10"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                    [rowsPerPageOptions]="[5,10,20]" selectionMode="single" (onRowSelect)="changeSelection($event)"
+                    [(selection)]="selectedProduct1">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>position</th>
+                            <th>Name</th>
+                            <th>time</th>
+                            <th>laps</th>
+                            <!-- <th>distance</th>
+                            <th>laps current</th>
+                            <th>status</th>
+                            <th>timezone</th>
+                            <th>type</th> -->
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-ranking>
+                        <tr [pSelectableRow]="ranking">
+                            <td>{{ranking.position}}</td>
+                            <td>{{ranking.driver.name}}</td>
+                            <td>{{ranking.time}}</td>
+                            <td>{{ranking.laps}}</td>
+                            <!-- <td>{{ranking.distance}}</td>
+                            <td>{{ranking.laps.current}}</td>
+                            <td>{{ranking.status}}</td>
+                            <td>{{ranking.timezone}}</td>
+                            <td>{{ranking.type}}</td> -->
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-card>
+            <p-card class="flex-1 w-6 m-2">
+                <p-dataView [value]="drivers">
+                    <ng-template let-driver pTemplate="listItem">
+                        <div class="flex flex-column">
+
+                            <div class="product-name">{{driver.id}}</div>
+                            <div class="product-name">{{driver.name}}</div>
+                            <div class="product-description">{{driver.birthdate}}</div>
+                            <div class="product-description">{{driver.nationality}}</div>
+                            <img src="{{driver.image}}" [alt]="driver.name" class="product-image" />
+                        </div>
+                    </ng-template>
+                </p-dataView>
+            </p-card>
+        </div>
+
+
+
+
+
+    </div>
+
 </div>
