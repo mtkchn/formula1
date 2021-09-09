@@ -1,46 +1,83 @@
-<div class="p-d-flex p-flex-column container">
-    <!-- <button pButton type="button" (click)="fetchcirCuits()" label="Click" ></button> -->
-
-
-
-    <p-carousel class="carousel-container" (onPage)="carouselEvent($event)" [value]="circuits" [showIndicators]="true"
-        [numVisible]="1" [numScroll]="1" [circular]="true">
+<div class="md:mx-8 p-d-flex p-flex-column container">
+    <p-carousel class="inverted" (onPage)="carouselEvent($event)" [value]="circuits" [showNavigators]="true"
+        [showIndicators]="true" [responsiveOptions]="responsiveOptions" [numVisible]="1" [numScroll]="1"
+        [circular]="true">
         <ng-template pTemplate="header">
-            <h5>Basic</h5>
+            <h2 class="mx-3 my-6">Circuits</h2>
         </ng-template>
-        <ng-template let-product pTemplate="item">
-            <div class="product-item">
-                <div class="product-item-content">
+        <ng-template let-carousel pTemplate="item">
+            <div class="carousel-item test-class">
+                <div class="carousel-item-content justify-content-center">
                     <div class="p-mb-1">
-                        <img src="{{product.image}}" [alt]="product.name" class="product-image" />
-                        <h1>{{product.name}}</h1>
+                        <img src="{{carousel.image}}" [alt]="carousel.name" class="carousel-image w-full" />
+                        <h5>{{carousel.name}}</h5>
                     </div>
-                    <div>
-                        <div class="car-buttons p-mt-5">
 
-                        </div>
-                    </div>
                 </div>
             </div>
         </ng-template>
     </p-carousel>
 
-    <div>
-
-        <!-- <p-dropdown [options]="cities" [(ngModel)]="selectedCity.code" optionLabel="name" optionValue="code"></p-dropdown> -->
-        <h5>Select year</h5>
-        <p-dropdown (onChange)="fatchRaces($event)" [options]="seasons" [(ngModel)]="selectedCity1"
+    <div class="my-6 mx-3">
+        <p-dropdown (onChange)="fatchRaces($event)" [options]="seasons" [(ngModel)]="selectedSeason"
             placeholder="Select Season" [showClear]="true"></p-dropdown>
     </div>
 
-    <div>
-        <h5>Single</h5>
-
-        <div class="flex flex-row">
-            <p-card class="w-6 m-2">
+    <div *ngIf="selectedSeason">
 
 
-                <p-table [value]="races" styleClass="p-datatable-sm" [paginator]="true" [rows]="10"
+        <div class="flex flex-column md:flex-row">
+            <p-card *ngIf="driver" class="md:flex-order-1  flex-1  md:w-6 m-3">
+                <h4 class="mb-4">Driver</h4>
+                <p-dataView [value]="driver">
+                    <ng-template let-driver pTemplate="listItem">
+                        <div class="w-full">
+                            <div class="flex flex-column md:flex-row w-full">
+                                <img class="md:w-4" src="{{driver.image}}" [alt]="driver.name" />
+
+                                <div class="flex flex-row md:w-8  m-2">
+                                    <ul class="w-6">
+                                        <li class=" m-1 product-name">name</li>
+                                        <li class=" m-1 product-description">birthdate</li>
+                                        <li class=" m-1 product-description">nationality</li>
+                                    </ul>
+                                    <ul class="w-6">
+                                        <li class=" m-1 product-name">{{driver.name}}</li>
+                                        <li class=" m-1 product-description">{{driver.birthdate}}</li>
+                                        <li class=" m-1 product-description">{{driver.nationality}}</li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                            <p-table class="m-2" [value]="driver.teams" styleClass="p-datatable-sm" [scrollable]="true"
+                                (onRowSelect)="changeSelection($event)">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Season</th>
+                                        <th>Team</th>
+                                        <!-- <th>Name</th>
+                                <th>time</th>
+                                <th>laps</th> -->
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-item>
+                                    <tr>
+                                        <td>{{item.season}}</td>
+                                        <td>{{item.team.name}}</td>
+
+                                        <!-- <td>{{ranking.driver.name}}</td>
+                                <td>{{ranking.time}}</td>
+                                <td>{{ranking.laps}}</td> -->
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </ng-template>
+                </p-dataView>
+            </p-card>
+            <p-card *ngIf="races && races.length !== 0; else emptyData" class=" md:flex-order-0 md:w-6 m-3">
+                <h2 class="mx-3">Rankings</h2>
+                <p-table [value]="races" styleClass="p-datatable-sm" [scrollable]="true" [paginator]="true" [rows]="10"
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
                     [rowsPerPageOptions]="[5,10,20]" selectionMode="single" (onRowSelect)="changeSelection($event)"
                     [(selection)]="selectedProduct1">
@@ -50,11 +87,6 @@
                             <th>Name</th>
                             <th>time</th>
                             <th>laps</th>
-                            <!-- <th>distance</th>
-                            <th>laps current</th>
-                            <th>status</th>
-                            <th>timezone</th>
-                            <th>type</th> -->
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-ranking>
@@ -63,30 +95,14 @@
                             <td>{{ranking.driver.name}}</td>
                             <td>{{ranking.time}}</td>
                             <td>{{ranking.laps}}</td>
-                            <!-- <td>{{ranking.distance}}</td>
-                            <td>{{ranking.laps.current}}</td>
-                            <td>{{ranking.status}}</td>
-                            <td>{{ranking.timezone}}</td>
-                            <td>{{ranking.type}}</td> -->
-
                         </tr>
                     </ng-template>
                 </p-table>
             </p-card>
-            <p-card class="flex-1 w-6 m-2">
-                <p-dataView [value]="drivers">
-                    <ng-template let-driver pTemplate="listItem">
-                        <div class="flex flex-column">
 
-                            <div class="product-name">{{driver.id}}</div>
-                            <div class="product-name">{{driver.name}}</div>
-                            <div class="product-description">{{driver.birthdate}}</div>
-                            <div class="product-description">{{driver.nationality}}</div>
-                            <img src="{{driver.image}}" [alt]="driver.name" class="product-image" />
-                        </div>
-                    </ng-template>
-                </p-dataView>
-            </p-card>
+            <ng-template #emptyData>
+                races not found
+            </ng-template>
         </div>
 
 

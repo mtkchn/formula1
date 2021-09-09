@@ -9,7 +9,7 @@ export class CustomHttpInterceptorService implements HttpInterceptor {
     // request = request.clone({headers: request.headers.set("Access-Control-Allow-Origin", "*")});
 
     request = request.clone({ headers: request.headers.set('x-rapidapi-host', 'api-formula-1.p.rapidapi.com') });
-    request = request.clone({ headers: request.headers.set('x-rapidapi-key', '9b8c96ae681780b75d173fa947d0ebdb') });
+    request = request.clone({ headers: request.headers.set('x-rapidapi-key', '583d288385a7eb107d6fb4c5b7274cc9') });
 
     return next.handle(request);
 

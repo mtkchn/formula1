@@ -39,7 +39,22 @@ export interface Race {
 export interface Laps {
     current: string
     total: number
-
 }
 
+export interface Driver {
+    id: number;
+    name: string;
+    image: string;
+    nationality: string;
+    birthdate: string;
+    teams: {
+        season: number;
+        team: Team;
+    }
+}
 
+export interface Team {
+    id: number;
+    name: string;
+    logo: string;
+}
